@@ -25,6 +25,8 @@ patterns, and hospital impact.
 - [HHS COVID-19 Reported Patient Impact and Hospital Capacity by State Timeseries](https://healthdata.gov/dataset/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/g62h-syeh)
 - [Our World in Data: COVID-19 hospitalizations](https://ourworldindata.org/covid-hospitalizations)
 - [US Census regions and divisions](https://github.com/cphalpert/census-regions)
+- [Spotify Top 200 + audio features](https://github.com/younver/spotify-top-200-dataset) (Music & COVID page; only
+  aggregates are shipped, because the dataset's licence does not clear Spotify's terms)
 """
 )
 

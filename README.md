@@ -17,6 +17,7 @@ patterns, per-capita comparisons, and hospital impact. It started as an R Shiny 
 | **Regions** | Census-region comparison (Northeast / Midwest / South / West) |
 | **Map** | State choropleth of cases or deaths per 100k, for any date or animated month by month |
 | **Hospitals** | HHS data: admissions by age, ICU and inpatient bed use, staffing shortages by state, US vs other countries |
+| **Music & COVID** | Did the audio profile of Spotify's weekly global Top 200 change after the pandemic was declared? Before/during tests with multiple-comparison correction, feature distributions, and a lagged comparison with US cases |
 | **Data & About** | Sources, data-freshness notes, CSV downloads |
 
 A shared sidebar date range applies across pages. Empty or partial selections show a message instead of an error.
@@ -58,7 +59,10 @@ docker build -t covid-dashboard . && docker run -p 8501:8501 covid-dashboard
 ```bash
 python -m src.etl                 # NYT cases/deaths + census regions
 python -m src.etl --download-hhs  # also re-download the HHS file and rebuild the hospital Parquet
+python -m src.etl --skip-core --download-music  # rebuild the Music & COVID aggregates (needs scipy)
 ```
+
+The app caches data per process, so restart it (or redeploy) after refreshing files.
 
 ## Develop
 
@@ -77,6 +81,18 @@ Tests cover the metric functions, the ETL transforms, and a smoke test that rend
 - HHS reporting contains isolated errors (e.g. one Texas record of 13,738 admissions for ages 18-19); the ETL masks
   such obvious spikes (see `mask_spikes`).
 - Per-100k rates use 2020 Census resident population.
+- **Music & COVID** builds on my earlier notebook analysis
+  ([Music_Before_During_Covid19](https://github.com/vandai-dong/Music_Before_During_Covid19)). That notebook's
+  data is no longer obtainable (the old Spotify charts site is gone and Spotify closed its audio-features API to
+  new apps), so the analysis was rebuilt on the public
+  [younver/spotify-top-200-dataset](https://github.com/younver/spotify-top-200-dataset) (global weekly Top 200,
+  108 charts from 2018-12-07 to 2020-12-25). Changes from the original: songs that charted in both periods are kept,
+  p-values are Benjamini-Hochberg adjusted, effect sizes are reported, and the song recommender was dropped
+  (it needs track-level data, and the original had a bug that made its ranking meaningless).
+- That dataset's licence does not clear Spotify's own terms, so **only aggregates** (weekly means, per-period
+  statistics, histogram bins) are committed; the raw CSV is downloaded on demand into a gitignored folder.
+- The music-vs-cases comparison is global music against US cases, and levels correlate mostly through winter
+  seasonality. Treat it as descriptive.
 - Territories appear in tables but not on the map (Plotly's `USA-states` locations cover the 50 states and DC).
 
 ## Sources
@@ -84,7 +100,8 @@ Tests cover the metric functions, the ETL transforms, and a smoke test that rend
 [NYT COVID-19 data](https://github.com/nytimes/covid-19-data) ·
 [HHS Reported Patient Impact and Hospital Capacity by State Timeseries](https://healthdata.gov/dataset/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/g62h-syeh) ·
 [Our World in Data hospitalizations](https://ourworldindata.org/covid-hospitalizations) ·
-[Census regions](https://github.com/cphalpert/census-regions)
+[Census regions](https://github.com/cphalpert/census-regions) ·
+[Spotify Top 200 + audio features (younver)](https://github.com/younver/spotify-top-200-dataset)
 
 ## License
 

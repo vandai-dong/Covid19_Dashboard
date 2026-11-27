@@ -2,6 +2,7 @@
 
     python -m src.etl                 # NYT + census regions (network)
     python -m src.etl --hhs           # also rebuild the hospital file from the HHS raw CSV
+    python -m src.etl --music         # also rebuild the Music & COVID aggregates (needs scipy)
 
 The Streamlit app never calls this module; it only reads the files this writes.
 """
@@ -148,6 +149,8 @@ def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--hhs", action="store_true", help="rebuild the hospital parquet from the HHS raw CSV")
     parser.add_argument("--download-hhs", action="store_true", help="re-download the HHS raw CSV first")
+    parser.add_argument("--music", action="store_true", help="rebuild the Music & COVID aggregates")
+    parser.add_argument("--download-music", action="store_true", help="re-download the Spotify Top 200 CSV first")
     parser.add_argument("--skip-core", action="store_true", help="skip the NYT/regions refresh")
     args = parser.parse_args(argv)
 
@@ -156,6 +159,10 @@ def main(argv: list[str] | None = None) -> None:
         run_core()
     if args.hhs or args.download_hhs:
         run_hospital(download=args.download_hhs)
+    if args.music or args.download_music:
+        from src.music_etl import run_music  # lazy: needs scipy (dev requirement)
+
+        run_music(download=args.download_music)
 
 
 if __name__ == "__main__":

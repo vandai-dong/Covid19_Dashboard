@@ -13,6 +13,19 @@ HOSPITAL_FILE = DATA_DIR / "hospital_state_daily.parquet"
 WORLD_HOSPITAL_FILE = DATA_DIR / "current-covid-patients-hospital.csv"
 HHS_RAW_FILE = RAW_DIR / "hhs_hospital_capacity_raw.csv"
 
+# Music & COVID: derived aggregates only (never track-level Spotify rows) are committed.
+MUSIC_RAW_FILE = RAW_DIR / "spotify_top200_raw.csv"
+MUSIC_WEEKLY_FILE = DATA_DIR / "music_weekly.csv"
+MUSIC_STATS_FILE = DATA_DIR / "music_period_stats.csv"
+MUSIC_HIST_FILE = DATA_DIR / "music_feature_hist.csv"
+MUSIC_URL = "https://raw.githubusercontent.com/younver/spotify-top-200-dataset/main/spotify-top-200-dataset.csv"
+MUSIC_FEATURES = [
+    "danceability", "energy", "speechiness", "acousticness", "instrumentalness",
+    "liveness", "valence", "tempo", "duration_s",
+]
+MUSIC_SPLIT_DATE = "2020-03-11"  # WHO declared COVID-19 a pandemic
+MUSIC_WINDOW = ("2018-12-07", "2020-12-25")  # 108 consecutive weekly charts
+
 NYT_US_URL = "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv"
 NYT_STATES_URL = "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv"
 REGIONS_URL = (
