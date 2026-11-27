@@ -44,3 +44,18 @@ def load_hospital() -> pd.DataFrame:
 @st.cache_data(show_spinner=False)
 def load_world_hospital() -> pd.DataFrame:
     return pd.read_csv(config.WORLD_HOSPITAL_FILE, parse_dates=["Day"])
+
+
+@st.cache_data(show_spinner=False)
+def load_music_weekly() -> pd.DataFrame:
+    return pd.read_csv(config.MUSIC_WEEKLY_FILE, parse_dates=["week"])
+
+
+@st.cache_data(show_spinner=False)
+def load_music_stats() -> pd.DataFrame:
+    return pd.read_csv(config.MUSIC_STATS_FILE)
+
+
+@st.cache_data(show_spinner=False)
+def load_music_hist() -> pd.DataFrame:
+    return pd.read_csv(config.MUSIC_HIST_FILE)

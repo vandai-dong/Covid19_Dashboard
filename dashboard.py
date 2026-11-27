@@ -11,6 +11,7 @@ pages = [
     st.Page("app_pages/regions.py", title="Regions", icon=":material/compare_arrows:"),
     st.Page("app_pages/map.py", title="Map", icon=":material/map:"),
     st.Page("app_pages/hospitals.py", title="Hospitals", icon=":material/local_hospital:"),
+    st.Page("app_pages/music.py", title="Music & COVID", icon=":material/music_note:"),
     st.Page("app_pages/about.py", title="Data & About", icon=":material/info:"),
 ]
 

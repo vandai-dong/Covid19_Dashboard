@@ -12,6 +12,7 @@ PAGES = [
     "app_pages/regions.py",
     "app_pages/map.py",
     "app_pages/hospitals.py",
+    "app_pages/music.py",
     "app_pages/about.py",
 ]
 
@@ -40,3 +41,12 @@ def test_partial_date_range_does_not_crash(app):
     at = app.switch_page("app_pages/trends.py").run()
     at.sidebar.date_input[0].set_value((dt.date(2021, 1, 1),)).run()
     assert not at.exception
+
+
+def test_music_lag_slider_changes_correlation_without_error(app):
+    at = app.switch_page("app_pages/music.py").run()
+    assert not at.exception
+    before = [m.value for m in at.metric]
+    at.slider[0].set_value(4).run()
+    assert not at.exception, [e.value for e in at.exception]
+    assert [m.value for m in at.metric] != before

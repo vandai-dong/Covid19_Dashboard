@@ -58,3 +58,26 @@ def summarise_us(us: pd.DataFrame, as_of: pd.Timestamp) -> dict:
         "cases_change_pct": period_change(history["daily_cases"].clip(lower=0)),
         "deaths_change_pct": period_change(history["daily_deaths"].clip(lower=0)),
     }
+
+
+def weekly_cases(us: pd.DataFrame, week_ends: pd.Series) -> pd.Series:
+    """New US cases in the 7 days ending on each date in ``week_ends`` (negative revisions floored at 0).
+
+    Dates before the first NYT record count as 0 cases. Returned series is indexed by ``week_ends``.
+    """
+    daily = us.set_index("date")["daily_cases"].clip(lower=0)
+    full = pd.date_range(min(daily.index.min(), week_ends.min() - pd.Timedelta(days=6)), daily.index.max(), freq="D")
+    rolled = daily.reindex(full, fill_value=0).rolling(7, min_periods=7).sum()
+    out = rolled.reindex(pd.DatetimeIndex(week_ends))
+    out.index = pd.DatetimeIndex(week_ends)
+    return out
+
+
+def lagged_correlation(cases: pd.Series, feature: pd.Series, lags: range | list[int]) -> pd.DataFrame:
+    """Pearson r between cases ``lag`` weeks earlier and the feature now (both indexed by week)."""
+    rows = []
+    for lag in lags:
+        pair = pd.concat([cases.shift(lag), feature], axis=1).dropna()
+        r = pair.iloc[:, 0].corr(pair.iloc[:, 1]) if len(pair) > 2 else float("nan")
+        rows.append({"lag_weeks": lag, "r": r, "n_weeks": len(pair)})
+    return pd.DataFrame(rows)
