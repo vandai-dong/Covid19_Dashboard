@@ -1,2 +1,18 @@
-# Virtual Environment
+# Environments
 venv/
+.venv/
+.env
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+.claude/
+
+# Large raw downloads (rebuilt by `python -m src.etl --download-hhs`)
+data/raw/
