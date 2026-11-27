@@ -6,7 +6,10 @@ An interactive Streamlit dashboard for exploring the US COVID-19 pandemic: cases
 patterns, per-capita comparisons, and hospital impact. It started as an R Shiny app (kept in
 [`legacy/RShiny`](legacy/RShiny)) and was rebuilt in Python with a cleaner data pipeline, caching, tests and CI.
 
-<!-- Add after deploying:  **Live demo:** https://<your-app>.streamlit.app  and a screenshot: ![Overview](docs/overview.png) -->
+**Live demo:** [open the app](https://covid19dashboard-5xwljm44ofcgzkk25gse8k.streamlit.app/)
+(hosted on Streamlit Community Cloud; it may take a few seconds to wake up if it has been idle)
+
+<!-- Add a screenshot or GIF here: ![Overview](docs/overview.png) -->
 
 ## Features
 
