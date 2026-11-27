@@ -9,7 +9,20 @@ patterns, per-capita comparisons, and hospital impact. It started as an R Shiny 
 **Live demo:** [open the app](https://covid19dashboard-5xwljm44ofcgzkk25gse8k.streamlit.app/)
 (hosted on Streamlit Community Cloud; it may take a few seconds to wake up if it has been idle)
 
-<!-- Add a screenshot or GIF here: ![Overview](docs/overview.png) -->
+<p align="center">
+  <img src="docs/overview.png" alt="Overview page: US headline numbers and top states" width="880">
+</p>
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/trends.png" alt="Trends page: per-100k daily cases for California, New York and Texas"><br><sub><b>Trends</b>: compare states, per-capita, log scale</sub></td>
+    <td width="50%"><img src="docs/map.png" alt="Map page: cases per 100k by state"><br><sub><b>Map</b>: cases or deaths per 100k, any date or animated</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/hospitals.png" alt="Hospitals page: adult admissions by age group"><br><sub><b>Hospitals</b>: HHS admissions, ICU use, staffing shortages</sub></td>
+    <td width="50%"><img src="docs/music.png" alt="Music and COVID page: before vs during comparison table"><br><sub><b>Music &amp; COVID</b>: adjusted before/during tests on Spotify audio features</sub></td>
+  </tr>
+</table>
 
 ## Features
 
